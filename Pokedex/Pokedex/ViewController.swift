@@ -73,7 +73,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        var poke: Pokemon!
+        if inSearchMode { // this command is necessary for iphone knows if pokemon has been selected from filtered arraylist or pokemon arraylist
+            poke = filteredPokemon[indexPath.row]
+        } else {
+            poke = pokemon[indexPath.row]
+        }
+        print(poke.name)
+        performSegueWithIdentifier("PokemonDetailVC", sender: poke) //selected poke, because it is where the information is coming from
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if inSearchMode {
@@ -111,6 +118,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         view.endEditing(true)
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "PokemonDetailVC" { //that's the segue way we are using and that's the screen we are going
+            if let detailsVC = segue.destinationViewController as? PokemonDetailVC { //grab the view controller as cast it from PokemonDetailsVC
+                if let poke = sender as? Pokemon { //we are grabbing the poke object and passing as a sender
+                    detailsVC.pokemon = poke //this is required to say, who is the sender, to cast it
+                }
+            }
+        }
     }
 }
 
