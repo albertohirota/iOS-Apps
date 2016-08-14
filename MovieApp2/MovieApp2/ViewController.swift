@@ -55,11 +55,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let currentCell = movies[indexPath.row]
         let storyboard = UIStoryboard(name: "DetailsVC", bundle: nil)
         let viewController: DetailsVC = storyboard.instantiateViewControllerWithIdentifier("DetailsVC") as! DetailsVC
-        viewController.dDescription = currentCell.descriptionMovie
-        viewController.dImage = currentCell.getMovieImg()
-        viewController.dTitle = currentCell.title
+   //     viewController.dDescription = currentCell.descriptionMovie
+   //     viewController.dImage = currentCell.getMovieImg()
+   //     viewController.dTitle = currentCell.title
         
-        viewController.summary = currentCell.urlImdbPlot
+   //     viewController.summary = currentCell.urlImdbPlot
         //viewController.passedValue = currentCell.textLabel.text
         self.presentViewController(viewController, animated: true, completion: nil)
         
