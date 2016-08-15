@@ -61,9 +61,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     details.dTitle = currentCell.title
                     details.dDescription = currentCell.descriptionMovie
                     details.dImage = currentCell.getMovieImg()
-                    
-//                    details.currentCell = currentCell as! MovieCell
-//                    details.detailsDescription = currentCell.movieDescription
+                    details.summary = currentCell.urlImdb
+                    details.imdbLink = currentCell.urlImdb
                 }
             }
         }

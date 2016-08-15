@@ -11,15 +11,12 @@ import CoreData
 
 class AddMovieVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    
     @IBOutlet weak var movieImg: UIImageView!
     @IBOutlet weak var movieTitle: UITextField!
     @IBOutlet weak var movieDescription: UITextField!
     @IBOutlet weak var movieUrl: UITextField!
     @IBOutlet weak var movieUrlPlot: UITextField!
-    
     var imagePicker: UIImagePickerController!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,20 +25,19 @@ class AddMovieVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         imagePicker.delegate = self
         movieImg.layer.cornerRadius = 5.0
         movieImg.clipsToBounds = true
-        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddMovieVC.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddMovieVC.keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddMovieVC.keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
         // Do any additional setup after loading the view.
     }
-    
     @IBAction func addImage(sender: AnyObject!) {
         presentViewController(imagePicker, animated: true, completion: nil)
     }
-    
-    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         movieImg.image = image
     }
-    
     @IBAction func saveBtn(sender: AnyObject!) {
         if let title = movieTitle.text where title != "" {
             let app = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -55,10 +51,7 @@ class AddMovieVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             movies.urlImdbPlot = movieUrlPlot.text
             movies.setMoviesImg(movieImg.image!)
             
-            
-            
             context.insertObject(movies)
-            
             do {
                 try context.save()
             } catch {
@@ -66,6 +59,24 @@ class AddMovieVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             }
             //self.navigationController?.popViewControllerAnimated(true)
             // dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    func keyboardWillShow(notification: NSNotification) {
+        //self.view.frame.origin.y -= 150
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+      if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardSize.height
+            }
         }
     }
 }
