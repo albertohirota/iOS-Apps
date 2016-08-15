@@ -11,7 +11,7 @@ import Foundation
 // if we don't put classes, it will be globally accessible
 
 let URL_BASE = "http://pokeapi.co"
-let URL_POKEMON = "/api/v1/pokemin/"
+let URL_POKEMON = "/api/v1/pokemon/"
 
 typealias DownloadComplete = () -> () //we are creating a closure, a block of code that will be called whenever we want to
 // first () means, we are not passing anything. And second one, it means we are not return anything.
