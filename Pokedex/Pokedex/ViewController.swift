@@ -21,7 +21,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collection.delegate = self //that means, we own the delegate and also datasource
+        collection.delegate = self 
         collection.dataSource = self
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.Done
@@ -44,10 +44,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         do {
             let csv = try CSV(contentsOfURL: path)
             let rows = csv.rows
-            //print(rows) //command to test if it is reading the CSV file
+            
             for row in rows {
                 let pokeId = Int(row["id"]!)!
-                let name = row["identifier"]! //identifier is the name of pokemon
+                let name = row["identifier"]!
                 let poke = Pokemon(name: name, pokedexId: pokeId)
                 pokemon.append(poke)
             }
@@ -58,42 +58,42 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PokeCell", forIndexPath: indexPath) as? PokeCell {
             
-            //let pokemon = Pokemon(name: "Test", pokedexId: (indexPath.row + 1)) // instead of create a new pokemon
-            let poke: Pokemon!//it is looping thought the data and grabbing out of it
-            //cell.configureCell(pokemon) // for create a new pokemon
+            
+            let poke: Pokemon!
+            
             if inSearchMode {
                 poke = filteredPokemon[indexPath.row]
             } else {
                 poke = pokemon[indexPath.row]
             }
             cell.configureCell(poke)
-            return cell // this function return the images for the cell, if you move image, new images will be download and place at screen
+            return cell
         } else {
             return UICollectionViewCell()
         }
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var poke: Pokemon!
-        if inSearchMode { // this command is necessary for iphone knows if pokemon has been selected from filtered arraylist or pokemon arraylist
+        if inSearchMode {
             poke = filteredPokemon[indexPath.row]
         } else {
             poke = pokemon[indexPath.row]
         }
         print(poke.name)
-        performSegueWithIdentifier("PokemonDetailVC", sender: poke) //selected poke, because it is where the information is coming from
+        performSegueWithIdentifier("PokemonDetailVC", sender: poke)
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if inSearchMode {
            return filteredPokemon.count
         } else {
-           return pokemon.count //that means 30 items in one section
+           return pokemon.count
         }
     }
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(105, 105) //size of each cell
+        return CGSizeMake(105, 105)
     }
     @IBAction func musicBtnPressed(sender: UIButton!) {
         if musicPlayer.playing {
@@ -112,7 +112,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             inSearchMode = true
             let lower = searchBar.text!.lowercaseString
-            filteredPokemon = pokemon.filter({$0.name.rangeOfString(lower) != nil})//$0 - means to grab an element out of the array
+            filteredPokemon = pokemon.filter({$0.name.rangeOfString(lower) != nil})
             collection.reloadData()
         }
     }
@@ -120,10 +120,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         view.endEditing(true)
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "PokemonDetailVC" { //that's the segue way we are using and that's the screen we are going
-            if let detailsVC = segue.destinationViewController as? PokemonDetailVC { //grab the view controller as cast it from PokemonDetailsVC
-                if let poke = sender as? Pokemon { //we are grabbing the poke object and passing as a sender
-                    detailsVC.pokemon = poke //this is required to say, who is the sender, to cast it
+        if segue.identifier == "PokemonDetailVC" {
+            if let detailsVC = segue.destinationViewController as? PokemonDetailVC {
+                if let poke = sender as? Pokemon {
+                    detailsVC.pokemon = poke
                 }
             }
         }

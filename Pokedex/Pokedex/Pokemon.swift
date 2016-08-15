@@ -123,18 +123,18 @@ class Pokemon {
         self._name = name
         self._pokedexId = pokedexId
         
-        _pokemonUrl = "\(URL_BASE)\(URL_POKEMON)\(self._pokedexId)/" //injecting variables in the string
+        _pokemonUrl = "\(URL_BASE)\(URL_POKEMON)\(self._pokedexId)/" 
         
     }
     func downloadPokemonDetails(completed: DownloadComplete) {
-        let url = NSURL(string: _pokemonUrl)! //creating a url --> based on URL
-        Alamofire.request(.GET, url).responseJSON { response in // it is creating another closure, after request run, it is saying to run this block of code
-            let result = response.result //making the request
-            print (result.value.debugDescription) //AlamoFire is to connect to server using JSON
+        let url = NSURL(string: _pokemonUrl)!
+        Alamofire.request(.GET, url).responseJSON { response in
+            let result = response.result
+            print (result.value.debugDescription)
             print (response.result)
-            if let dict = result.value as? Dictionary<String, AnyObject> { //convert a JSON into a dictionary
+            if let dict = result.value as? Dictionary<String, AnyObject> {
                 if let weight = dict["weight"] as? String {
-                    self._weight = weight //if you have a property in the closure, you have always to use self object, refering where the object lives.
+                    self._weight = weight
                 }
                 if let height = dict["height"] as? String {
                     self._height = height
@@ -151,9 +151,9 @@ class Pokemon {
                 print(self._attack)
                 print(self._defense)
                 
-                if let types = dict["types"] as? [Dictionary<String, String>]  where types.count > 0 { //this as? -> means casting the dictionary, first convert
-                    print(types.debugDescription) // if sucess convert it, then check if types is bigger than 0
-                    if let name = types[0] ["name"] { //grab the first item, item number 0
+                if let types = dict["types"] as? [Dictionary<String, String>]  where types.count > 0 {
+                    print(types.debugDescription)
+                    if let name = types[0] ["name"] {
                        // if let name = type ["name"] --> thats exactly same thing as ["name"] above
                        self._type = name.capitalizedString
                     }
@@ -191,7 +191,7 @@ class Pokemon {
                             if let uri = evolutions[0]["resource_uri"] as? String {
                                 let newStr = uri.stringByReplacingOccurrencesOfString("/api/v1/pokemon/", withString: "") //this command is to replace "/api/.." to ""
                                 // so, the uri number will be available to grab the pokemon next evolution number --> "resource_uri" : "/api/v1/pokemon/452/"
-                                let num = newStr.stringByReplacingOccurrencesOfString("/", withString: "") // here is to remover the last slash, so we have only number now
+                                let num = newStr.stringByReplacingOccurrencesOfString("/", withString: "")
                                 self._nextEvolutionId = num
                                 self._nextEvolutionTxt = to
                                 

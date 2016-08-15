@@ -10,7 +10,7 @@ import UIKit
 
 class PokemonDetailVC: UIViewController {
     
-    var pokemon: Pokemon! //this is required, to receive information from other view Controller, it will happen BEFORE ViewDidLoad happens and data will be already available
+    var pokemon: Pokemon!
     
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var mainImg: UIImageView!
@@ -31,17 +31,11 @@ class PokemonDetailVC: UIViewController {
         let img = UIImage(named: "\(pokemon.pokedexId)")
         mainImg.image = img
         evolution1Img.image = img
-//        if let height = pokemon.height {
-//            heightLbl.text = height
-//        } //one way to grab information
-        
         
         pokemon.downloadPokemonDetails { () -> () in
-            //this will be called after download is done, we don't have the data yet
-          print("DID WE GET HERE")
+            print("DID WE GET HERE")
             self.updateUI()
         }
-        
     }
     func updateUI() {
         descriptionLbl.text = pokemon.description
@@ -64,18 +58,12 @@ class PokemonDetailVC: UIViewController {
                 str += " = LVL \(pokemon.nextEvolutionLvl)"
             }
         }
-        
-        
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     @IBAction func backBtnPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
 }
