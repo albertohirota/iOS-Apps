@@ -23,4 +23,35 @@ class Entity: NSManagedObject {
         let img = UIImage(data: self.image!)!
         return img
     }
+    
+//    //private var _image: UIImageView!
+//    private var _title: String = ""
+//    private var _description: String = ""
+//    private var _urlImdb: String = ""
+//    private var _urlImdbPlot: String = ""
+//    
+//    //    var imageM: UIImageView {
+//    //        return _image
+//    //    }
+//    var titleM: String {
+//        return _title
+//    }
+//    var descriptionM: String {
+//        return _description
+//    }
+//    var urlImdbM: String {
+//        return _urlImdb
+//    }
+//    var urlImdbPlotM: String {
+//        return _urlImdbPlot
+//    }
+//    init(titleM: String, descriptionM: String, urlImdbM: String, urlImdbPlotM: String){
+//        // self._image = imageM
+//        self._title = titleM
+//        self._description = descriptionM
+//        self._urlImdb = urlImdbM
+//        self._urlImdbPlot = urlImdbPlotM
+//    }
+
+    
 }

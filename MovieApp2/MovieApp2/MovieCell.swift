@@ -15,8 +15,7 @@ class MovieCell: UITableViewCell {
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieDescription: UILabel!
     @IBOutlet weak var movieUrl: UILabel!
-    
-    override func awakeFromNib() {
+        override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
@@ -27,4 +26,6 @@ class MovieCell: UITableViewCell {
         movieDescription.text = movies.descriptionMovie
         movieUrl.text = movies.urlImdb
     }
+    
+    
 }

@@ -81,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				70719DFA1D60E46D00CC58AA /* ViewController.swift */,
+				70719E121D60EC4600CC58AA /* DetailsVC.swift */,
 				70719E181D60F36C00CC58AA /* MovieCell.swift */,
 			);
 			name = Controller;
@@ -99,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				70719E101D60EC2000CC58AA /* AddMovieVC.swift */,
-				70719E121D60EC4600CC58AA /* DetailsVC.swift */,
 				70719E141D60EDDC00CC58AA /* Entity+CoreDataProperties.swift */,
 				70719E151D60EDDC00CC58AA /* Entity.swift */,
 			);
@@ -336,6 +336,7 @@
 				70719E0C1D60E46D00CC58AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
