@@ -20,14 +20,105 @@ class Pokemon {
     private var _attack: String!
     private var _nextEvolutionTxt: String!
     private var _pokemonUrl: String!
+    private var _nextEvolutionId: String!
+    private var _nextEvolutionLvl: String!
     
+    var description: String {
+        get {
+            if _description == nil {
+                _description = ""
+            }
+        return _description
+        }
+    }
+    var type: String {
+        get {
+            if _type == nil {
+                _type = ""
+            }
+            return _type
+    }
+    }
+    var defense: String {
+        get {
+        if _defense == nil {
+        _defense = ""
+        }
+        return _defense
+    }
+    }
+    var attack: String {
+        get {
+        if _attack == nil {
+        _attack = ""
+        }
+        return _attack
+    }
+    }
+    var height: String {
+        get {
+        if _height == nil {
+        _height = ""
+        }
+        return _height
+    }
+    }
+    var weight: String {
+        get {
+        if _weight == nil {
+        _weight = ""
+        }
+        return _weight
+    }
+    }
+    var nextEvolutionTxt: String {
+        get {
+        if _nextEvolutionTxt == nil {
+        _nextEvolutionTxt = ""
+        }
+        return _nextEvolutionTxt
+    }
+    }
+    var nextEvolutionId: String {
+        get {
+        if _nextEvolutionId == nil {
+        _nextEvolutionId = ""
+        }
+        return _nextEvolutionId
+    }
+    }
+    var nextEvolutionLvl: String {
+        get {
+        if _nextEvolutionLvl == nil {
+        _nextEvolutionLvl = ""
+        }
+        return _nextEvolutionLvl
+    }
+    }
+    var pokemonUrl: String {
+        get {
+        if _pokemonUrl == nil {
+        _pokemonUrl = ""
+        }
+        return _pokemonUrl
+    }
+    }
     var name: String {
-        return _name
+        get {
+            if _name == nil {
+                _name = ""
+            }
+            return _name
+        }
     }
     var pokedexId: Int {
-        return _pokedexId
+        get {
+            if _pokedexId == nil {
+                _pokedexId = 0
+            }
+            return _pokedexId
+        }
     }
-    
     init(name: String, pokedexId: Int) {
         self._name = name
         self._pokedexId = pokedexId
@@ -77,6 +168,44 @@ class Pokemon {
                     self._type = ""
                 }
                 print(self._type)
+                if let descArr = dict["descriptions"] as?[Dictionary<String, String>] where descArr.count > 0 {
+                    if let url = descArr[0]["resource_uri"] {
+                        let nsurl = NSURL(string: "\(URL_BASE)\(url)")!
+                        Alamofire.request(.GET, nsurl).responseJSON { response in
+                            let desResult = response.result
+                            if let descDict = desResult.value as? Dictionary<String, AnyObject> {
+                                if let description = descDict["description"] as? String {
+                                    self._description = description
+                                    print(self._description)
+                                    }
+                                }
+                            completed()
+                            }
+                    }
+                } else {
+                    self._description = ""
+                }
+                if let evolutions = dict["evolutions"] as? [Dictionary<String, AnyObject>]  where evolutions.count > 0 {
+                    if let to = evolutions[0]["to"] as? String {
+                        if to.rangeOfString("mega") == nil { //that means: word "mega" was not find in this String, can't support mega pokemon right now
+                            if let uri = evolutions[0]["resource_uri"] as? String {
+                                let newStr = uri.stringByReplacingOccurrencesOfString("/api/v1/pokemon/", withString: "") //this command is to replace "/api/.." to ""
+                                // so, the uri number will be available to grab the pokemon next evolution number --> "resource_uri" : "/api/v1/pokemon/452/"
+                                let num = newStr.stringByReplacingOccurrencesOfString("/", withString: "") // here is to remover the last slash, so we have only number now
+                                self._nextEvolutionId = num
+                                self._nextEvolutionTxt = to
+                                
+                                if let lvl = evolutions[0]["level"] as? Int {
+                                    self._nextEvolutionLvl = "\(lvl)"
+                                }
+                                print(self._nextEvolutionId)
+                                print(self._nextEvolutionTxt)
+                                print(self._nextEvolutionLvl)
+                                
+                            }
+                        }
+                    }
+                }
             }
         }
     }

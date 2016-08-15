@@ -101,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				70719DCB1D600B5500CC58AA /* Main.storyboard */,
+				70719DE11D60182200CC58AA /* PokeCell.swift */,
 				70719DD01D600B5500CC58AA /* LaunchScreen.storyboard */,
 			);
 			name = View;
@@ -118,7 +119,6 @@
 		70719DE61D60BB8B00CC58AA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				70719DE11D60182200CC58AA /* PokeCell.swift */,
 				70719DC91D600B5500CC58AA /* ViewController.swift */,
 				70719DEA1D60DB9C00CC58AA /* PokemonDetailVC.swift */,
 			);
