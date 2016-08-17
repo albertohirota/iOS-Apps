@@ -236,8 +236,7 @@ class Weather: UIViewController {
                     if let dict = json as? Dictionary<String, AnyObject> {
                         if let city = dict["name"] as? String {
                             self._city = city
-                            //self.viewController.cityLbl.text = self._city
-                            print(self._city)
+                            //print(self._city)
                         }
                         if let main1 = dict["main"] where main1.count > 0  {
                             print(main1.debugDescription)
@@ -246,7 +245,7 @@ class Weather: UIViewController {
                                 //                        print(self._temperature)
                             }
                             if let humidity = main1["humidity"] as? Int {
-                                self._humidity = "\(humidity)"
+                                self._humidity = "\(humidity)%"
                                 //                        print(self._humidity)
                             }
                             if let tempMax = main1["temp_max"] as? Int {
@@ -265,9 +264,11 @@ class Weather: UIViewController {
                             }
                         }
                         if let windy = dict["wind"] {
-                            if let speed = windy["speed"] {
-                                self._wind = "\(speed)"
-                                //                        print(self._wind)
+                            if let speed = windy["speed"] as? Int {
+                                let spee = "\(speed)"
+                                let spe = NSString(format: "%.2f", spee)
+                                self._wind = "\(spe)m/s"
+                                //print(self._wind)
                             }
                         }
                         print(self._city)
