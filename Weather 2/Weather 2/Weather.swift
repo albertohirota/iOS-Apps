@@ -44,7 +44,6 @@ class Weather: UIViewController {
             if _city == nil {
                 _city = ""
             }
-            print(_city)
             return _city
         }
     }
@@ -59,7 +58,7 @@ class Weather: UIViewController {
     var weatherCond: String? {
         get {
             if _weatherCond == nil {
-                _weatherCond = ""
+                _weatherCond = "01d"
             }
             return _weatherCond
         }
@@ -99,7 +98,7 @@ class Weather: UIViewController {
     var condNextDay1: String? {
         get {
             if _condNextDay1 == nil {
-                _condNextDay1 = ""
+                _condNextDay1 = "01d"
             }
             return _condNextDay1
         }
@@ -123,7 +122,7 @@ class Weather: UIViewController {
     var condNextDay2: String? {
         get {
             if _condNextDay2 == nil {
-                _condNextDay2 = ""
+                _condNextDay2 = "01d"
             }
             return _condNextDay2
         }
@@ -147,7 +146,7 @@ class Weather: UIViewController {
     var condNextDay3: String? {
         get {
             if _condNextDay3 == nil {
-                _condNextDay3 = ""
+                _condNextDay3 = "01d"
             }
             return _condNextDay3
         }
@@ -171,7 +170,7 @@ class Weather: UIViewController {
     var condNextDay4: String? {
         get {
             if _condNextDay4 == nil {
-                _condNextDay4 = ""
+                _condNextDay4 = "01d"
             }
             return _condNextDay4
         }
@@ -195,7 +194,7 @@ class Weather: UIViewController {
     var condNextDay5: String? {
         get {
             if _condNextDay5 == nil {
-                _condNextDay5 = ""
+                _condNextDay5 = "01d"
             }
             return _condNextDay5
         }
@@ -271,13 +270,13 @@ class Weather: UIViewController {
                                 //print(self._wind)
                             }
                         }
-                        print(self._city)
-                        print(self._temperature)
-                        print(self._humidity)
-                        print(self._tempMax)
-                        print(self._tempMin)
-                        print(self._weatherCond)
-                        print(self._wind)
+//                        print(self._city)
+//                        print(self._temperature)
+//                        print(self._humidity)
+//                        print(self._tempMax)
+//                        print(self._tempMin)
+//                        print(self._weatherCond)
+//                        print(self._wind)
                     }
                 }catch {
                     print("could not serialize")
@@ -292,7 +291,6 @@ class Weather: UIViewController {
         let url = NSURL(string: "\(_urlForecast)\(latitu)&lon=\(longit)\(_apiKey)&units=metric")!
         let session1 = NSURLSession.sharedSession()
         
-        
         //Alamofire.request(.GET, url).responseJSON { response in
         // let result = response.result
         //print(url)
@@ -305,25 +303,66 @@ class Weather: UIViewController {
                 do {
                     
                     let json = try NSJSONSerialization.JSONObjectWithData(responseData, options: NSJSONReadingOptions.AllowFragments)
-                    
+                    print(url)
                     //if let dict = result.value as? Dictionary<String, AnyObject> { //command Alamofire
                     if let dictF = json as? Dictionary<String, AnyObject> {
                         
                         if let listF = dictF["list"] as? [Dictionary<String, AnyObject>] {
-                            if let main1 = listF[0]["main"] {
+                            let listCount1 = 6
+                            let listCount2 = 14
+                            let listCount3 = 22
+                            let listCount4 = 30
+                            let listCount5 = 38
+                            var listC1: Int! = 0
+                            var listC2: Int! = 0
+                            var listC3: Int! = 0
+                            var listC4: Int! = 0
+                            var listC5: Int! = 0
+                            
+                            if listCount1 > listF.count {
+                                listC1 = listF.count - 1
+                            } else {
+                                listC1 = listCount1 - 1
+                            }
+                            if listCount2 > listF.count {
+                                listC2 = listF.count - 1
+                            } else {
+                                listC2 = listCount2 - 1
+                            }
+                            if listCount3 > listF.count {
+                                listC3 = listF.count - 1
+                            } else {
+                                listC3 = listCount3 - 1
+                            }
+                            if listCount4 > listF.count {
+                                listC4 = listF.count - 1
+                            } else {
+                                listC4 = listCount4 - 1
+                            }
+                            if listCount5 > listF.count {
+                                listC5 = listF.count - 1
+                            } else {
+                                listC5 = listCount5 - 1
+                            }
+                            //print("\(listF.count) total array ")
+                            
+                            if let main1 = listF[listC1]["main"] {
                                 if let tempMin1 = main1["temp_min"] as? Int {
                                     self._tempMin1 = "\(tempMin1)\u{00B0}"
                                 }
                                 if let tempMax1 = main1["temp_max"] as? Int {
                                     self._tempMax1 = "\(tempMax1)\u{00B0}"
                                 }
+                                if let _dt = main1["dt"] as? Double {
+                                    print(_dt)
+                                }
                             }
-                            if let weather1 = listF[0]["weather"] {
+                            if let weather1 = listF[listC1]["weather"] {
                                 if let icon1 = weather1[0]["icon"] as? String {
                                     self._condNextDay1 = icon1
                                 }
                             }
-                            if let main2 = listF[1]["main"] {
+                            if let main2 = listF[listC2]["main"] {
                                 if let tempMin2 = main2["temp_min"] as? Int {
                                     self._tempMin2 = "\(tempMin2)\u{00B0}"
                                 }
@@ -331,12 +370,12 @@ class Weather: UIViewController {
                                     self._tempMax2 = "\(tempMax2)\u{00B0}"
                                 }
                             }
-                            if let weather2 = listF[1]["weather"] {
+                            if let weather2 = listF[listC2]["weather"] {
                                 if let icon2 = weather2[0]["icon"] as? String {
                                     self._condNextDay2 = icon2
                                 }
                             }
-                            if let main3 = listF[2]["main"] {
+                            if let main3 = listF[listC3]["main"] {
                                 if let tempMin3 = main3["temp_min"] as? Int {
                                     self._tempMin3 = "\(tempMin3)\u{00B0}"
                                 }
@@ -344,12 +383,12 @@ class Weather: UIViewController {
                                     self._tempMax3 = "\(tempMax3)\u{00B0}"
                                 }
                             }
-                            if let weather3 = listF[2]["weather"] {
+                            if let weather3 = listF[listC3]["weather"] {
                                 if let icon3 = weather3[0]["icon"] as? String {
                                     self._condNextDay3 = icon3
                                 }
                             }
-                            if let main4 = listF[3]["main"] {
+                            if let main4 = listF[listC4]["main"] {
                                 if let tempMin4 = main4["temp_min"] as? Int {
                                     self._tempMin4 = "\(tempMin4)\u{00B0}"
                                 }
@@ -357,12 +396,12 @@ class Weather: UIViewController {
                                     self._tempMax4 = "\(tempMax4)\u{00B0}"
                                 }
                             }
-                            if let weather4 = listF[3]["weather"] {
+                            if let weather4 = listF[listC4]["weather"] {
                                 if let icon4 = weather4[0]["icon"] as? String {
                                     self._condNextDay4 = icon4
                                 }
                             }
-                            if let main5 = listF[4]["main"] {
+                            if let main5 = listF[listC5]["main"] {
                                 if let tempMin5 = main5["temp_min"] as? Int {
                                     self._tempMin5 = "\(tempMin5)\u{00B0}"
                                 }
@@ -370,7 +409,7 @@ class Weather: UIViewController {
                                     self._tempMax5 = "\(tempMax5)\u{00B0}"
                                 }
                             }
-                            if let weather5 = listF[4]["weather"] {
+                            if let weather5 = listF[listC5]["weather"] {
                                 if let icon5 = weather5[0]["icon"] as? String {
                                     self._condNextDay5 = icon5
                                 }

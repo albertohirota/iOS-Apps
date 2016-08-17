@@ -55,14 +55,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
     var week4: String?
     var week5: String?
     var weekName = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"]
-    
-    //typealias ScreenUpdate = () -> ()
+    var secs: Int = 0
+    var sec: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locateMe()
         timeNow()
         weekDay()
+        secNow()
         print("DID we get here? - end of did view load")
     }
     func locateMe() {
@@ -86,16 +87,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
         print(long)
         print(lat)
         print("After DownloadUpdates and before Screen Update")
+        updates()
+        
     }
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         locationManager.stopUpdatingLocation()
     }
     @IBAction func updatePressed(sender: UIButton) {
-        updates()
-    }
-    @IBAction func screenPressed(sender: UIButton) {
-        updateScreen()
-        //print("After Screen Update")
+        locateMe()
+        timeNow()
+        weekDay()
+        secNow()
     }
     func updateScreen() {
         cityLbl.text = weather.city
@@ -121,24 +123,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
         tempMin3.text = weather.tempMin3
         dayOfWeek4.text = week4
         condImg4.image = UIImage(named: weather.condNextDay4!)
-        print(weather.condNextDay4)
         tempMax4.text = weather.tempMax4
         tempMin4.text = weather.tempMin4
         dayOfWeek5.text = week5
         condImg5.image = UIImage(named: weather.condNextDay5!)
         tempMax5.text = weather.tempMax5
         tempMin5.text = weather.tempMin5
+        print("Tried to udpate")
     }
     func updates() {
-        //Weather().downloadWeather1(latitude!, longit: longitude!)
-        //Weather().downloadForecast(latitude!, longit: longitude!)
         weather.downloadWeather1(latitude!, longit: longitude!)
         weather.downloadForecast(latitude!, longit: longitude!)
+        
+        repeat {
+            updateScreen()
+            secs = NSCalendar.currentCalendar().component(.Second, fromDate: NSDate())
+        }
+        while secs <= sec
+    }
+    func secNow() {
+        let secs = NSCalendar.currentCalendar().component(.Second, fromDate: NSDate())
+        sec = secs + 4
     }
     func timeNow() {
         let hours = NSCalendar.currentCalendar().component(.Hour, fromDate: NSDate())
         let minutes = NSCalendar.currentCalendar().component(.Minute, fromDate: NSDate())
-        actualTime = "\(hours):\(minutes)"
+        let min = NSString(format: "%02d", minutes)
+        actualTime = "\(hours):\(min)"
         print(actualTime)
     }
     func weekDay() {
