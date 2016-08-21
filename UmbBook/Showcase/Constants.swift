@@ -17,7 +17,6 @@ let KEY_UID = "uid"
 //Segues 
 let SEGUE_LOGGED_IN = "loggedIn"
 
-
 //Firebase Status Codes
 let STATUS_MISSING_CREDENTS = -5
 let STATUS_ACCOUNT_NOEXIST = 17011

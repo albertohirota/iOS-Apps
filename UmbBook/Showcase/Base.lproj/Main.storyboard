@@ -22,6 +22,7 @@
             <string>NotoSans</string>
             <string>NotoSans</string>
             <string>NotoSans</string>
+            <string>NotoSans</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -68,7 +69,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7X-K8-Xsu" customClass="MaterialView" customModule="Showcase" customModuleProvider="target">
-                                <rect key="frame" x="20" y="225" width="560" height="355"/>
+                                <rect key="frame" x="20" y="197" width="560" height="383"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Login / Signup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U0C-nO-sNa">
                                         <rect key="frame" x="20" y="20" width="186" height="24"/>
@@ -89,7 +90,7 @@
                                         </variation>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" E-Mail Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5Y-04-Ww3" customClass="MaterialTextField" customModule="Showcase" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="64" width="520" height="35"/>
+                                        <rect key="frame" x="20" y="54" width="520" height="35"/>
                                         <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="Utv-5R-Dor"/>
@@ -99,7 +100,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w38-T3-38U" customClass="MaterialTextField" customModule="Showcase" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="119" width="520" height="35"/>
+                                        <rect key="frame" x="20" y="99" width="520" height="35"/>
                                         <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="sEL-2O-Kgv"/>
@@ -108,8 +109,8 @@
                                         <fontDescription key="fontDescription" name="NotoSans" family="Noto Sans" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2l-Tj-QSh" customClass="MaterialButton" customModule="Showcase" customModuleProvider="target">
-                                        <rect key="frame" x="180" y="204" width="200" height="33"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2l-Tj-QSh" customClass="MaterialButton" customModule="Showcase" customModuleProvider="target">
+                                        <rect key="frame" x="180" y="277" width="200" height="33"/>
                                         <color key="backgroundColor" red="0.95686274510000002" green="0.31764705879999999" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Lzr-iV-SuO"/>
@@ -122,38 +123,52 @@
                                             <action selector="attemptLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wwz-yl-ARH"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="User Name or NickName" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9U9-Rr-Bph" customClass="MaterialTextField" customModule="Showcase" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="142" width="520" height="35"/>
+                                        <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="Bbg-et-jUg"/>
+                                        </constraints>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="NotoSans" family="Noto Sans" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="w38-T3-38U" firstAttribute="top" secondItem="z5Y-04-Ww3" secondAttribute="bottom" constant="20" id="0ad-kO-H9E"/>
+                                    <constraint firstItem="w38-T3-38U" firstAttribute="top" secondItem="z5Y-04-Ww3" secondAttribute="bottom" constant="10" id="0ad-kO-H9E"/>
+                                    <constraint firstAttribute="trailing" secondItem="9U9-Rr-Bph" secondAttribute="trailing" constant="20" id="4pN-rR-u55"/>
                                     <constraint firstItem="z5Y-04-Ww3" firstAttribute="leading" secondItem="U0C-nO-sNa" secondAttribute="leading" id="DEa-3q-t1x"/>
                                     <constraint firstAttribute="trailing" secondItem="z5Y-04-Ww3" secondAttribute="trailing" constant="20" id="DJc-Sz-YzD"/>
+                                    <constraint firstItem="9U9-Rr-Bph" firstAttribute="leading" secondItem="C7X-K8-Xsu" secondAttribute="leading" constant="20" id="M6l-Zl-ZH3"/>
                                     <constraint firstAttribute="trailing" secondItem="w38-T3-38U" secondAttribute="trailing" constant="20" id="NyQ-Js-b8h"/>
-                                    <constraint firstItem="z5Y-04-Ww3" firstAttribute="top" secondItem="U0C-nO-sNa" secondAttribute="bottom" constant="20" id="Ws2-Gd-SoB"/>
+                                    <constraint firstItem="z5Y-04-Ww3" firstAttribute="top" secondItem="U0C-nO-sNa" secondAttribute="bottom" constant="10" id="Ws2-Gd-SoB"/>
                                     <constraint firstItem="Y2l-Tj-QSh" firstAttribute="top" secondItem="w38-T3-38U" secondAttribute="bottom" constant="50" id="asZ-n4-WON"/>
                                     <constraint firstAttribute="height" constant="128" id="ctk-91-Dtv"/>
                                     <constraint firstItem="U0C-nO-sNa" firstAttribute="leading" secondItem="C7X-K8-Xsu" secondAttribute="leading" constant="20" id="ei8-iE-oXF"/>
                                     <constraint firstItem="Y2l-Tj-QSh" firstAttribute="centerX" secondItem="C7X-K8-Xsu" secondAttribute="centerX" id="muF-aR-I3J"/>
+                                    <constraint firstItem="9U9-Rr-Bph" firstAttribute="top" secondItem="w38-T3-38U" secondAttribute="bottom" constant="8" id="vCi-3T-9aq"/>
                                     <constraint firstItem="w38-T3-38U" firstAttribute="leading" secondItem="z5Y-04-Ww3" secondAttribute="leading" id="y97-Cy-zAw"/>
                                     <constraint firstItem="U0C-nO-sNa" firstAttribute="top" secondItem="C7X-K8-Xsu" secondAttribute="top" constant="20" id="zKK-6x-vEn"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="ctk-91-Dtv"/>
+                                        <exclude reference="asZ-n4-WON"/>
                                     </mask>
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hNW-JG-Y7U" customClass="MaterialView" customModule="Showcase" customModuleProvider="target">
-                                <rect key="frame" x="20" y="77" width="560" height="128"/>
+                                <rect key="frame" x="20" y="77" width="560" height="100"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="d62-6Z-Nsi">
-                                        <rect key="frame" x="20" y="10" width="520" height="108"/>
+                                        <rect key="frame" x="20" y="10" width="520" height="80"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fb-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Sx1-ol-cjE">
-                                                <rect key="frame" x="0.0" y="22" width="65" height="65"/>
+                                                <rect key="frame" x="0.0" y="8" width="65" height="65"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1JS-6m-nFU" customClass="MaterialButton" customModule="Showcase" customModuleProvider="target">
-                                                <rect key="frame" x="115" y="38" width="405" height="33"/>
+                                                <rect key="frame" x="115" y="24" width="405" height="33"/>
                                                 <color key="backgroundColor" red="0.11764705882352941" green="0.53333333333333333" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="NotoSans-Bold" family="Noto Sans" pointSize="15"/>
                                                 <color key="tintColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -168,7 +183,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="d62-6Z-Nsi" secondAttribute="trailing" constant="20" id="JoO-NY-tqa"/>
-                                    <constraint firstAttribute="height" constant="128" id="VUa-Yo-D09"/>
+                                    <constraint firstAttribute="height" constant="100" id="VUa-Yo-D09"/>
                                     <constraint firstItem="d62-6Z-Nsi" firstAttribute="leading" secondItem="hNW-JG-Y7U" secondAttribute="leading" constant="20" id="XhL-rm-wVj"/>
                                     <constraint firstAttribute="bottom" secondItem="d62-6Z-Nsi" secondAttribute="bottom" constant="10" id="lzn-Uz-gzs"/>
                                     <constraint firstItem="d62-6Z-Nsi" firstAttribute="top" secondItem="hNW-JG-Y7U" secondAttribute="top" constant="10" id="rwJ-bv-yiV"/>

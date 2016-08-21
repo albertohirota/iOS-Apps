@@ -11,7 +11,6 @@ import Alamofire
 import Firebase
 import FirebaseDatabase
 
-
 class PostCell: UITableViewCell {
     
     @IBOutlet weak var userImg: UIImageView!
@@ -19,16 +18,13 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var likeImg: UIImageView!
     @IBOutlet weak var descriptionText: UITextView!
     @IBOutlet weak var likesLbl: UILabel!
-    
     var request: Request?
     var likeRef: FIRDatabaseReference!
-    
     private var _post: Post?
     
     var post: Post? {
         return _post
     }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -36,10 +32,7 @@ class PostCell: UITableViewCell {
         tap.numberOfTapsRequired = 1
         likeImg.addGestureRecognizer(tap)
         likeImg.userInteractionEnabled = true
-        
-        
     }
-    
     override func drawRect(rect: CGRect) {
         userImg.layer.cornerRadius = userImg.frame.size.width / 2
         userImg.clipsToBounds = true
@@ -47,29 +40,22 @@ class PostCell: UITableViewCell {
         likeImg.layer.cornerRadius = likeImg.frame.size.width / 2
         likeImg.clipsToBounds = true
     }
-
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-    
     func configureCell(post: Post, img: UIImage?) {
-        
         //Clear existing image (because its old)
         self.appImg.image = nil
         self._post = post
         self.likeRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
         //self.likeRef = FIRDatabaseReference.child(<#T##FIRDatabaseReference#>)   .child("likes")
-        
         if let desc = post.postDescription where post.postDescription != "" {
             self.descriptionText.text = desc
         } else {
             self.descriptionText.hidden = true
         }
-        
         self.likesLbl.text = "\(post.likes)"
-        
         if post.imageUrl != nil {
             //Use the cached image if there is one, otherwise download the image
             if img != nil {
@@ -85,12 +71,9 @@ class PostCell: UITableViewCell {
                     }
                 })
             }
-            
         } else {
             self.appImg.hidden = true
         }
-        
-        
         //Grab the current users likes and see if the current post has been liked
         likeRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
             
@@ -100,30 +83,23 @@ class PostCell: UITableViewCell {
                 self.likeImg.image = UIImage(named: "heart-full")
             }
         })
-        
     }
-    
     func likeTapped(sender: UITapGestureRecognizer) {
         
         likeRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
-            
             //If I haven't like this, then like it, otherwise un-like it
             if (snapshot.value as? NSNull) != nil {
                 self.likeRef.setValue(true)
                 self.likeImg.image = UIImage(named: "heart-full")
                 self.post!.adjustLikes(true)
-                
             } else {
                 self.likeRef.removeValue()
                 self.likeImg.image = UIImage(named: "heart-empty")
                 self.post!.adjustLikes(false)
             }
-            
             self.likesLbl.text = "\(self.post!.likes)"
         })
     }
-    
-    
 }
 
 

@@ -16,7 +16,6 @@ let URL_BASE = FIRDatabase.database().reference()
 class DataService {
     static let ds = DataService()
     
-    
     //base reference that will be using for logging, accessing, authenticate
     var _REF_BASE = URL_BASE
 
@@ -33,20 +32,14 @@ class DataService {
     var REF_USERS: FIRDatabaseReference {
         return _REF_USERS
     }
-    
-    
     func createFirebaseUser(uid: String, user: Dictionary<String, String>) {
         REF_USERS.child(uid).setValue(user) // this was wrong, this will always try to create new user
         REF_USERS.child(uid).updateChildValues(user)
     }
-    
     var REF_USER_CURRENT: FIRDatabaseReference {
         let uid = NSUserDefaults.standardUserDefaults().valueForKey(KEY_UID) as! String
         let user = URL_BASE.child("users").child(uid)
         return user
     }
-
-    
-    
 }
 

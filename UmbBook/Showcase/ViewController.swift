@@ -21,7 +21,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         //If the user is already logged in take them straight to the next screen
@@ -29,7 +28,6 @@ class ViewController: UIViewController {
             self.performSegueWithIdentifier("loggedIn", sender: nil)
         }
     }
-    
     @IBAction func fbBtnPressed(sender: UIButton!) {
         let facebookLogin = FBSDKLoginManager()
         facebookLogin.logInWithReadPermissions(["email"], fromViewController: self) { (facebookResult: FBSDKLoginManagerLoginResult!, facebookError: NSError!) -> Void in
@@ -41,9 +39,7 @@ class ViewController: UIViewController {
                 
                 //DataService.ds.REF_BASE.authWithAuthProvider("facebook", String!, accessToken: String!, withCompletionBlock: { error, authData in
                 //login in facebook, but need to store, but need to store data in Firebase, OLD WAY
-                
                 FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
-                
                 if error != nil {
                         print("Login failed. \(error)")
                     } else {
@@ -66,14 +62,10 @@ class ViewController: UIViewController {
         //Make sure there is an email and a password
         if let email = emailField.text where email != "", let pwd = passwordField.text where pwd != "" {
 //            DataService.ds.REF_BASE.authUser(email, password: pwd) { error, authData in
-  
             
             FIRAuth.auth()?.signInWithEmail(email, password: pwd, completion: { (user, error) in
-                
-                
                 if error != nil {
                     print(error)
-                    
                     if error!.code == STATUS_ACCOUNT_NOEXIST {
 //                        DataService.ds.REF_BASE.createUser(email, password: pwd,
                         FIRAuth.auth()?.createUserWithEmail(email, password: pwd, completion: { user, error in
@@ -82,8 +74,7 @@ class ViewController: UIViewController {
                                                                 self.showErrorAlert("Could not create account", msg: "Problem creating account. Try something else")
                                                             } else {
                                                                 //let uid = result["uid"] as? String
-                                                                NSUserDefaults.standardUserDefaults().setValue(user!.uid, forKey: KEY_UID)
-                                                                
+                                                        NSUserDefaults.standardUserDefaults().setValue(user!.uid, forKey: KEY_UID)
 //                                                                DataService.ds.REF_BASE.authUser(email, password: pwd, withCompletionBlock: { error, authData in
                                                                     
                                                                     //Store what type of account this is
@@ -97,7 +88,6 @@ class ViewController: UIViewController {
                     } else {
                         self.showErrorAlert("Error loggin in", msg: "Could not log in. Check your username and password")
                     }
-                    
                 } else {
                     self.performSegueWithIdentifier(SEGUE_LOGGED_IN, sender: nil)
                 }
@@ -106,14 +96,12 @@ class ViewController: UIViewController {
             showErrorAlert("Email & Password Required", msg: "You must enter an email address and a password")
         }
     }
-    
     func showErrorAlert(title: String, msg: String) {
         let alert = UIAlertController(title: title, message: msg, preferredStyle: UIAlertControllerStyle.Alert)
         let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
         alert.addAction(action)
         presentViewController(alert, animated: true, completion: nil)
     }
-    
 }
 
 
