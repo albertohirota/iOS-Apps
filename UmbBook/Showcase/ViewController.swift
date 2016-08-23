@@ -26,6 +26,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var _userIm: UIImage?
     var imagePicker: UIImagePickerController!
     var metaD: FIRStorageMetadata?
+    var userPhotoUrl: String?
     var userNa: String {
         return _userNa!
     }
@@ -101,12 +102,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                             let userData = ["provider": "email"]
                             DataService.ds.createFirebaseUser(user!.uid, user: userData)
                             DataService.ds.REF_USERS.child(user!.uid).child("userName").setValue(userNam)
-                            //userName = userNam
                             //DataService.ds.createFirebaseUser(user!.uid, user: userName)
 //                          })
                             //let imgUrl = "https://s3.amazonaws.com/albertodevelopment/MissingPerson/person7.jpg"
                             self.uploadPhoto()
-                            //userId = (user?.uid)!
+                            
                             self.performSegueWithIdentifier(SEGUE_LOGGED_IN, sender: nil)
                             }
                         })
@@ -121,7 +121,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             showErrorAlert("Email & Password Required", msg: "You must enter an email address and a password")
         }
     }
-    func uploadPhoto() {
+   func uploadPhoto() {
         let imageNa = NSUUID().UUIDString
         let storageR = FIRStorage.storage().reference().child("user").child("\(imageNa).jpg")
         if let uploadData = UIImageJPEGRepresentation(self.imageSelect.image!, 0.2) {
@@ -133,7 +133,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 }
                 if let profileImageUrl = self.metaD?.downloadURL()?.absoluteString {
                     DataService.ds.REF_USER_CURRENT.child("userImgUrl").setValue(profileImageUrl)
-                    //userImageUrl = profileImageUrl
+                    self.userPhotoUrl = profileImageUrl
                 }
             })
         }

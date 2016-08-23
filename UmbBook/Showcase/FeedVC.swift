@@ -24,8 +24,6 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
     var imagePicker: UIImagePickerController!
     var metaD: FIRStorageMetadata?
     var userId: String?
-    var userNa: String?
-    var userImgUrl: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +60,6 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
             self.users = []
             //if let snapshots = snapshot.children.allObjects as? [FDataSnapshot] {//old way
             if let snapshotsU = snapshot.children.allObjects as? [FIRDataSnapshot] {
-
                 
                 for snap in snapshotsU {
                     print("SNAPUSER:\(snap)")
@@ -72,23 +69,48 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
                         self.userId = key
                         let user = Post(postKey: key, dictionary: postDict)
                         self.users.append(user)
-    
-                        if let uName = postDict["userName"] as? String {
-                            self.userNa = "\(uName)"
-                            print(self.userNa)
-                        }
-                        if let uImgU = postDict["userImgUrl"] as? String {
-                            self.userImgUrl = "\(uImgU)"
-                            print(self.userImgUrl)
-                        }
+                        let userProfile = FIRAuth.auth()?.currentUser
+                        let userUid = userProfile?.uid
+                            if let uName = postDict["userName"] as? String where key == userUid {
+                                let userNa = "\(uName)"
+                                print("YYYYYY: \(userNa)")
+                                    let changeRequest = userProfile!.profileChangeRequest()
+                                    changeRequest.displayName = userNa
+                                    changeRequest.commitChangesWithCompletion({ error in
+                                    if let error = error {
+                                        print(error)
+                                    } else {
+                                        print("Profile updated")
+                                    }
+                                    })
+                            }
+                            if let uImgU = postDict["userImgUrl"] as? String where key == userUid {
+                                let userImgUrl1 = "\(uImgU)"
+                                print(userImgUrl1)
+                                let changeRequest = userProfile!.profileChangeRequest()
+                                changeRequest.photoURL = NSURL(string: userImgUrl1 )
+                                changeRequest.commitChangesWithCompletion({ error in
+                                    if let error = error {
+                                        print(error)
+                                    } else {
+                                        print("Profile updated")
+                                        /*if let userProfile = FIRAuth.auth()?.currentUser {
+                                            let namexxx = userProfile.displayName
+                                            let emailxxx = userProfile.email
+                                            let imageUrlxxx = userProfile.photoURL
+                                            self.userId = userProfile.uid
+                                            print("XXXX \(namexxx)")
+                                            print("XXXX \(emailxxx)")
+                                            print("XXXX \(imageUrlxxx)")
+                                            print("XXXX \(self.userId)")
+                                        }*/
+                                    }
+                                })
+                            }
                     }
                 }
             }
-
-            
-
         })
-        
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -148,8 +170,7 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
                         }
                     })
                 }
-
-/*                let urlStr = "https://post.imageshack.us/upload_api.php"
+/*              let urlStr = "https://post.imageshack.us/upload_api.php"
                 let keyData = "12DJKPSU5fc3afbd01b1630cc718cae3043220f3".dataUsingEncoding(NSUTF8StringEncoding)!
                 let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
                 
@@ -190,22 +211,11 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
         var post: Dictionary<String, AnyObject> = [
             "description":postField.text!,
             "likes": 0,
-            "userId":userId!,
-            "userName":userNa!,
-            "userImageUrl":userImgUrl!
+            "userId":userId!
         ]
-        
         if imgUrl != nil {
             post["imageUrl"] = imgUrl!
         }
-        
-//        if userName != "" {
-//            post["userName"] = userName
-//        }
-//        if userImageUrl != "" {
-//            post["userImageUrl"] = userImageUrl
-//        }
-        
         //Save new post to firebase
         let fbPost = DataService.ds.REF_POSTS.childByAutoId()
         fbPost.setValue(post)

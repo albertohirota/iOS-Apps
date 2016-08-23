@@ -16,8 +16,6 @@ let storage = FIRStorage.storage()
 let storageRef = storage.referenceForURL("gs://showcase-ff9d9.appspot.com")
 let userImgRef = storageRef.child("users")
 
-
-
 class DataService {
     static let ds = DataService()
     
@@ -46,7 +44,5 @@ class DataService {
         let user = URL_BASE.child("users").child(uid)
         return user
     }
-    
-    
 }
 
