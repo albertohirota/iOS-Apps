@@ -11,7 +11,6 @@
 		7001A67C1D6C077600023860 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7001A6791D6C077600023860 /* FBSDKCoreKit.framework */; };
 		7001A67D1D6C077600023860 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7001A67A1D6C077600023860 /* FBSDKLoginKit.framework */; };
 		703BF26D1D6A60E2008EDEA5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 703BF26C1D6A60E2008EDEA5 /* GoogleService-Info.plist */; };
-		706D20191D6B823700E65FDD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D20181D6B823700E65FDD /* User.swift */; };
 		707CC59A1D65E68800CACB09 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707CC5991D65E68800CACB09 /* FeedVC.swift */; };
 		707CC59C1D65E74F00CACB09 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707CC59B1D65E74F00CACB09 /* PostCell.swift */; };
 		7097C6911D68AB1A00F983C9 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097C6901D68AB1A00F983C9 /* Post.swift */; };
@@ -38,7 +37,6 @@
 		7001A6791D6C077600023860 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		7001A67A1D6C077600023860 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		703BF26C1D6A60E2008EDEA5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		706D20181D6B823700E65FDD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		707CC5991D65E68800CACB09 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		707CC59B1D65E74F00CACB09 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		7097C6901D68AB1A00F983C9 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -148,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				7097C6901D68AB1A00F983C9 /* Post.swift */,
-				706D20181D6B823700E65FDD /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -279,6 +276,7 @@
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/myfile",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -335,7 +333,6 @@
 				70F546A51D64ED5900CAF48C /* Constants.swift in Sources */,
 				70F546A71D64F7FC00CAF48C /* MaterialButton.swift in Sources */,
 				7097C6911D68AB1A00F983C9 /* Post.swift in Sources */,
-				706D20191D6B823700E65FDD /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

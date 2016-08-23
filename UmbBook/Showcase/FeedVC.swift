@@ -62,9 +62,7 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
             self.users = []
             //if let snapshots = snapshot.children.allObjects as? [FDataSnapshot] {//old way
             if let snapshotsU = snapshot.children.allObjects as? [FIRDataSnapshot] {
-//                if let uName = snapshotsU["userName"] as? String {
-//                    let uNa = "\(uName)"
-//                }
+
                 
                 for snap in snapshotsU {
                     print("SNAPUSER:\(snap)")
