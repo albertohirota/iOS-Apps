@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import Firebase
 import FirebaseDatabase
+import FirebaseAuth
 
 class PostCell: UITableViewCell {
     
@@ -45,18 +46,30 @@ class PostCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-    func configureCell(post: Post, img: UIImage?) {
+    func configureCell(post: Post, img: UIImage?, userPhoto: UIImage?) {
         //Clear existing image (because its old)
         self.appImg.image = nil
         self._post = post
         self.likeRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
         //self.likeRef = FIRDatabaseReference.child(<#T##FIRDatabaseReference#>)   .child("likes")
+        
+        let userProfile = FIRAuth.auth()?.currentUser
+            let uName = userProfile?.displayName
+            let uImgUrl = userProfile?.photoURL
+        if uName != nil {
+            self.userNameLbl.text = uName
+        } else {
+            self.userNameLbl.text = "Espirito"
+            self.userNameLbl.hidden = true
+        }
+        
         if let desc = post.postDescription where post.postDescription != "" {
             self.descriptionText.text = desc
         } else {
             self.descriptionText.hidden = true
         }
         self.likesLbl.text = "\(post.likes)"
+        
         if post.imageUrl != nil {
             //Use the cached image if there is one, otherwise download the image
             if img != nil {
@@ -74,6 +87,25 @@ class PostCell: UITableViewCell {
             }
         } else {
             self.appImg.hidden = true
+        }
+        
+        if  uImgUrl != nil {
+            //Use the cached image if there is one, otherwise download the image
+            if userPhoto != nil {
+                userImg.image = userPhoto!
+            } else {
+                //Must store the request so we can cancel it later if this cell is now out of the users view
+                request = Alamofire.request(.GET, uImgUrl!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, err in
+                    
+                    if err == nil {
+                        let userPhoto = UIImage(data: data!)!
+                        self.userImg.image = userPhoto
+                        FeedVC.userImgCache.setObject(userPhoto, forKey: uImgUrl!)
+                    }
+                })
+            }
+        } else {
+            self.userImg.hidden = true
         }
         //Grab the current users likes and see if the current post has been liked
         likeRef.observeSingleEventOfType(.Value, withBlock: { snapshot in

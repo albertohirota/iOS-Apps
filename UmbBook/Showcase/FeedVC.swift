@@ -16,6 +16,7 @@ import Alamofire
 class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
     static let imageCache = NSCache()
+    static let userImgCache = NSCache()
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var postImg: UIImageView!
     @IBOutlet weak var postField: MaterialTextField!
@@ -132,7 +133,14 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
             if let url = post.imageUrl {
                 img = FeedVC.imageCache.objectForKey(url) as? UIImage //this FeedVC, it is almost like self
             }
-            cell.configureCell(post, img: img)
+            var userPhoto: UIImage?
+            let userProfile = FIRAuth.auth()?.currentUser
+            let uImageUrl = userProfile?.uid
+            if let urlP = uImageUrl {
+                userPhoto = FeedVC.userImgCache.objectForKey(urlP) as? UIImage
+            }
+            
+            cell.configureCell(post, img: img, userPhoto: userPhoto)
             return cell
         } else {
             return PostCell()

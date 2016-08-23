@@ -16,6 +16,8 @@ class Post {
     private var _likes: Int!
     private var _username: String!
     private var _postKey: String!
+   
+    
     private var _postRef: FIRDatabaseReference!
     
     var postDescription: String? {
