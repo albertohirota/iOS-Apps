@@ -12,6 +12,12 @@ import FirebaseAuth
 import FirebaseDatabase
 
 let URL_BASE = FIRDatabase.database().reference()
+let storage = FIRStorage.storage()
+let storageRef = storage.referenceForURL("gs://showcase-ff9d9.appspot.com")
+let userImgRef = storageRef.child("users")
+var userName = ""
+var userImageUrl = ""
+var userId = ""
 
 class DataService {
     static let ds = DataService()
@@ -41,5 +47,7 @@ class DataService {
         let user = URL_BASE.child("users").child(uid)
         return user
     }
+    
+    
 }
 

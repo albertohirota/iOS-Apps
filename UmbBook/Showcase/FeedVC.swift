@@ -12,6 +12,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import Alamofire
 
+
 class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
     static let imageCache = NSCache()
@@ -20,6 +21,9 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
     @IBOutlet weak var postField: MaterialTextField!
     var posts = [Post]()
     var imagePicker: UIImagePickerController!
+    var metaD: FIRStorageMetadata?
+    var usId = userId
+    var usNa = userName
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +57,6 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
                 self.tableView.reloadData()
         })
     }
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -94,10 +97,36 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
     @IBAction func makePost(sender: AnyObject) {
         if let txt = postField.text where txt != "" {
             if let img = postImg.image {
-                let urlStr = "https://post.imageshack.us/upload_api.php"
-                let url = NSURL(string: urlStr)!
-                let imgData = UIImageJPEGRepresentation(img, 0.2)!
-                //let keyData = "49ACILMSa3bb4f31c5b6f7aeee9e5623c70c83d7".dataUsingEncoding(NSUTF8StringEncoding)!
+           
+                let imageName = NSUUID().UUIDString
+                let storageR = FIRStorage.storage().reference().child("posts").child("\(imageName).jpg")
+                if let uploadData = UIImageJPEGRepresentation(img, 0.2) {
+                    storageR.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                        self.metaD = metadata
+                        if error != nil {
+                            print(error)
+                            return
+                        }
+                        if let imageUrl = self.metaD?.downloadURL()?.absoluteString {
+                            self.postToFirebase(imageUrl)
+                            print("xxxxxxxx\(imageUrl)")
+                            
+//                            if let info = response.result.value as? Dictionary<String, AnyObject> {
+//                                //if let info = result.data as? Dictionary<String, AnyObject> {
+//                                if let links = info["links"] as? Dictionary<String, AnyObject> {
+//                                    print(links)
+//                                    if let imgLink = links["image_link"] as? String {
+//                                        self.postToFirebase(imgLink)
+ 
+                          
+                            
+                        } else {
+                            self.postToFirebase(nil)
+                        }
+                    })
+                }
+
+/*                let urlStr = "https://post.imageshack.us/upload_api.php"
                 let keyData = "12DJKPSU5fc3afbd01b1630cc718cae3043220f3".dataUsingEncoding(NSUTF8StringEncoding)!
                 let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
                 
@@ -130,18 +159,30 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
                 }
             } else {
                 postToFirebase(nil)
-            }
+        */ }
         }
     }
     func postToFirebase(imgUrl: String?) {
         
         var post: Dictionary<String, AnyObject> = [
             "description":postField.text!,
-            "likes": 0
+            "likes": 0,
+            "userId":usId,
+            "userName":usNa
+            //"userImageUrl":usUr!
         ]
+        
         if imgUrl != nil {
             post["imageUrl"] = imgUrl!
         }
+        
+//        if userName != "" {
+//            post["userName"] = userName
+//        }
+//        if userImageUrl != "" {
+//            post["userImageUrl"] = userImageUrl
+//        }
+        
         //Save new post to firebase
         let fbPost = DataService.ds.REF_POSTS.childByAutoId()
         fbPost.setValue(post)

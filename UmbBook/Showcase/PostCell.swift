@@ -18,6 +18,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var likeImg: UIImageView!
     @IBOutlet weak var descriptionText: UITextView!
     @IBOutlet weak var likesLbl: UILabel!
+    @IBOutlet weak var userNameLbl: UILabel!
     var request: Request?
     var likeRef: FIRDatabaseReference!
     private var _post: Post?
