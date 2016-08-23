@@ -20,10 +20,12 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
     @IBOutlet weak var postImg: UIImageView!
     @IBOutlet weak var postField: MaterialTextField!
     var posts = [Post]()
+    var users = [Post]()
     var imagePicker: UIImagePickerController!
     var metaD: FIRStorageMetadata?
-    var usId = userId
-    var usNa = userName
+    var userId: String?
+    var userNa: String?
+    var userImgUrl: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +58,39 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
                 }
                 self.tableView.reloadData()
         })
+        DataService.ds.REF_USERS.observeEventType(.Value, withBlock: { snapshot in
+            self.users = []
+            //if let snapshots = snapshot.children.allObjects as? [FDataSnapshot] {//old way
+            if let snapshotsU = snapshot.children.allObjects as? [FIRDataSnapshot] {
+//                if let uName = snapshotsU["userName"] as? String {
+//                    let uNa = "\(uName)"
+//                }
+                
+                for snap in snapshotsU {
+                    print("SNAPUSER:\(snap)")
+                    //Clear the array because we are going to add all the objects again
+                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                        let key = snap.key
+                        self.userId = key
+                        let user = Post(postKey: key, dictionary: postDict)
+                        self.users.append(user)
+    
+                        if let uName = postDict["userName"] as? String {
+                            self.userNa = "\(uName)"
+                            print(self.userNa)
+                        }
+                        if let uImgU = postDict["userImgUrl"] as? String {
+                            self.userImgUrl = "\(uImgU)"
+                            print(self.userImgUrl)
+                        }
+                    }
+                }
+            }
+
+            
+
+        })
+        
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -110,16 +145,6 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
                         if let imageUrl = self.metaD?.downloadURL()?.absoluteString {
                             self.postToFirebase(imageUrl)
                             print("xxxxxxxx\(imageUrl)")
-                            
-//                            if let info = response.result.value as? Dictionary<String, AnyObject> {
-//                                //if let info = result.data as? Dictionary<String, AnyObject> {
-//                                if let links = info["links"] as? Dictionary<String, AnyObject> {
-//                                    print(links)
-//                                    if let imgLink = links["image_link"] as? String {
-//                                        self.postToFirebase(imgLink)
- 
-                          
-                            
                         } else {
                             self.postToFirebase(nil)
                         }
@@ -167,9 +192,9 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
         var post: Dictionary<String, AnyObject> = [
             "description":postField.text!,
             "likes": 0,
-            "userId":usId,
-            "userName":usNa
-            //"userImageUrl":usUr!
+            "userId":userId!,
+            "userName":userNa!,
+            "userImageUrl":userImgUrl!
         ]
         
         if imgUrl != nil {

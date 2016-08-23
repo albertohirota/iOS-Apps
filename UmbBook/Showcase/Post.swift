@@ -63,7 +63,6 @@ class Post {
         //_postRef.childByAppendingPath("likes").setValue(_likes)
         _postRef.child("likes").setValue(_likes)
     }
-    func updateImagePost(imgUrl: String) {
-        _postRef.child("imageUrl").setValue(imgUrl)
-    }
+    
+    
 }
