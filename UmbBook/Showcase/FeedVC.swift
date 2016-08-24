@@ -37,6 +37,8 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         initObservers()
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(FeedVC.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     func initObservers() {
         
@@ -77,6 +79,7 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
                                 print("YYYYYY: \(userNa)")
                                     let changeRequest = userProfile!.profileChangeRequest()
                                     changeRequest.displayName = userNa
+                                
                                     changeRequest.commitChangesWithCompletion({ error in
                                     if let error = error {
                                         print(error)
@@ -215,11 +218,13 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
         }
     }
     func postToFirebase(imgUrl: String?) {
-        
+        let userProfile = FIRAuth.auth()?.currentUser
         var post: Dictionary<String, AnyObject> = [
             "description":postField.text!,
             "likes": 0,
-            "userId":userId!
+            "userId":userId!,
+            "email":(userProfile?.email)!,
+            "userPhotoUrl":(userProfile?.photoURL)!
         ]
         if imgUrl != nil {
             post["imageUrl"] = imgUrl!
@@ -235,6 +240,9 @@ class FeedVC: UIViewController, UITableViewDataSource, UITableViewDelegate,UIIma
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         postImg.image = image
+    }
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 

@@ -51,7 +51,6 @@ class PostCell: UITableViewCell {
         self.appImg.image = nil
         self._post = post
         self.likeRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
-        //self.likeRef = FIRDatabaseReference.child(<#T##FIRDatabaseReference#>)   .child("likes")
         
         let userProfile = FIRAuth.auth()?.currentUser
             let uName = userProfile?.displayName

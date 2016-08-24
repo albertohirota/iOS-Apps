@@ -16,6 +16,7 @@ let KEY_UID = "uid"
 
 //Segues 
 let SEGUE_LOGGED_IN = "loggedIn"
+let SEGUE_DELETE_AC = "DeleteAC"
 
 //Firebase Status Codes
 let STATUS_MISSING_CREDENTS = -5

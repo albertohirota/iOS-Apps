@@ -35,10 +35,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
+        
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         //If the user is already logged in take them straight to the next screen
+        self.navigationItem.setHidesBackButton (true, animated: true)
         if NSUserDefaults.standardUserDefaults().valueForKey(KEY_UID) != nil {
             self.performSegueWithIdentifier("loggedIn", sender: nil)
         }
@@ -77,8 +83,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     @IBAction func attemptLogin(sender: UIButton!) {
         //Make sure there is an email and a password
-        if let email = emailField.text where email != "", let pwd = passwordField.text where pwd != "", let userNam = nameField.text where _userNa != "" {
-            _userNa = userNam
+        if let email = emailField.text where email != "", let pwd = passwordField.text where pwd != "", let userNam = nameField.text where userNam != "" {
+            
 //            DataService.ds.REF_BASE.authUser(email, password: pwd) { error, authData in
             
             FIRAuth.auth()?.signInWithEmail(email, password: pwd, completion: { (user, error) in
@@ -114,15 +120,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                         self.showErrorAlert("Error loggin in", msg: "Could not log in. Check your username and password")
                     }
                 } else {
+                    NSUserDefaults.standardUserDefaults().setValue(user!.uid, forKey: KEY_UID)
                     self.performSegueWithIdentifier(SEGUE_LOGGED_IN, sender: nil)
                 }
             })
         } else {
-            showErrorAlert("Email & Password Required", msg: "You must enter an email address and a password")
+            showErrorAlert("Email, Name & Password Required", msg: "You must enter an email address, Name and a password")
         }
     }
    func uploadPhoto() {
-        let imageNa = NSUUID().UUIDString
+    if imageSelect.image == nil {
+        imageSelect.image = UIImage(named: "atabaque")
+    }
+    
+    let imageNa = NSUUID().UUIDString
         let storageR = FIRStorage.storage().reference().child("user").child("\(imageNa).jpg")
         if let uploadData = UIImageJPEGRepresentation(self.imageSelect.image!, 0.2) {
             storageR.putData(uploadData, metadata: nil, completion: { (metadata, error) in
@@ -163,6 +174,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
         alert.addAction(action)
         presentViewController(alert, animated: true, completion: nil)
+    }
+    func dismissKeyboard(notification: NSNotification) {
+        view.endEditing(true)
+    }
+    func keyboardWillShow(notification: NSNotification) {
+        //self.view.frame.origin.y -= 260
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if view.frame.origin.y ==  200  {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
 }
 
