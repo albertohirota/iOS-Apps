@@ -28,6 +28,7 @@ class UserUpdateVC: UIViewController {
     }
     
     @IBAction func updateBtn(sender: AnyObject) {
+        
     }
     
     
@@ -36,9 +37,7 @@ class UserUpdateVC: UIViewController {
     }
     @IBAction func closeAcBtn(sender: AnyObject) {
         let warningAlert = UIAlertController(title: "Alert", message: "Your account will be deleted!", preferredStyle: UIAlertControllerStyle.Alert)
-        
         warningAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler : { (action: UIAlertAction!) in
-            
             let user = FIRAuth.auth()?.currentUser
                     user?.deleteWithCompletion({ error in
                         if let error = error {

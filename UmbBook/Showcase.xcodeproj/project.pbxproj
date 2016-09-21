@@ -452,6 +452,7 @@
 			baseConfigurationReference = B4A667DD425B48FC804000CC /* Pods-Showcase.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Showcase",
@@ -468,6 +469,7 @@
 			baseConfigurationReference = 68AE2799F990B207543670BD /* Pods-Showcase.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: alberto hirota (X5X5933WA2)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Showcase",

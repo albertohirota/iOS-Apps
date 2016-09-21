@@ -83,34 +83,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     @IBAction func attemptLogin(sender: UIButton!) {
         //Make sure there is an email and a password
-        if let email = emailField.text where email != "", let pwd = passwordField.text where pwd != "", let userNam = nameField.text where userNam != "" {
-            
-//            DataService.ds.REF_BASE.authUser(email, password: pwd) { error, authData in
+        if let email = emailField.text where email != "", let pwd = passwordField.text where pwd != "", let userNam = nameField.text {
             
             FIRAuth.auth()?.signInWithEmail(email, password: pwd, completion: { (user, error) in
                 if error != nil {
                     print(error)
                     if error!.code == STATUS_ACCOUNT_NOEXIST {
-//                        DataService.ds.REF_BASE.createUser(email, password: pwd,
                         FIRAuth.auth()?.createUserWithEmail(email, password: pwd, completion: { user, error in
                             
                         if error != nil {
                             self.showErrorAlert("Could not create account", msg: "Problem creating account. Try something else")
                         } else {
-                            //let uid = result["uid"] as? String
                             NSUserDefaults.standardUserDefaults().setValue(user!.uid, forKey: KEY_UID)
-                            //print("user: \(user)")
-                            //print("user.uid: \(user?.uid)")
-                            //print("Key_Uid: \(KEY_UID)")
                             
-//                          DataService.ds.REF_BASE.authUser(email, password: pwd, withCompletionBlock: { error, authData in
                             //Store what type of account this is
                             let userData = ["provider": "email"]
                             DataService.ds.createFirebaseUser(user!.uid, user: userData)
                             DataService.ds.REF_USERS.child(user!.uid).child("userName").setValue(userNam)
-                            //DataService.ds.createFirebaseUser(user!.uid, user: userName)
-//                          })
-                            //let imgUrl = "https://s3.amazonaws.com/albertodevelopment/MissingPerson/person7.jpg"
                             self.uploadPhoto()
                             
                             self.performSegueWithIdentifier(SEGUE_LOGGED_IN, sender: nil)
@@ -125,14 +114,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 }
             })
         } else {
-            showErrorAlert("Email, Name & Password Required", msg: "You must enter an email address, Name and a password")
+            showErrorAlert("Email & Password Required", msg: "You must enter an email address and a password")
         }
     }
    func uploadPhoto() {
     if imageSelect.image == nil {
         imageSelect.image = UIImage(named: "atabaque")
-    }
-    
+    } else {
     let imageNa = NSUUID().UUIDString
         let storageR = FIRStorage.storage().reference().child("user").child("\(imageNa).jpg")
         if let uploadData = UIImageJPEGRepresentation(self.imageSelect.image!, 0.2) {
@@ -148,6 +136,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 }
             })
         }
+    }
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo editingInfo: [String : AnyObject]) {
        
