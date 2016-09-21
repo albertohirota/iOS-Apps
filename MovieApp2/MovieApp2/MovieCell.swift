@@ -15,7 +15,8 @@ class MovieCell: UITableViewCell {
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieDescription: UILabel!
     @IBOutlet weak var movieUrl: UILabel!
-        override func awakeFromNib() {
+    
+    override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
