@@ -44,14 +44,14 @@ class PokemonDetailVC: UIViewController {
         baseAttackLbl.text = pokemon.attack
         heightLbl.text = pokemon.height
         weightLbl.text = pokemon.weight
-        nameLbl.text = pokemon.name.capitalizedString
+        nameLbl.text = pokemon.name.capitalized
         pokedexIdLbl.text = "\(pokemon.pokedexId)"
         
         if pokemon.nextEvolutionId == "" {
             evolutionLbl.text = "No Evolutions"
-            evolution2Img.hidden = true
+            evolution2Img.isHidden = true
         } else {
-                evolution2Img.hidden = false
+                evolution2Img.isHidden = false
             evolution2Img.image = UIImage(named: pokemon.nextEvolutionId)
             var str = "Next Evolution: \(pokemon.nextEvolutionTxt)"
             if pokemon.nextEvolutionLvl != "" {
@@ -63,7 +63,7 @@ class PokemonDetailVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func backBtnPressed(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backBtnPressed(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
 }
