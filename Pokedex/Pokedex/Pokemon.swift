@@ -128,7 +128,7 @@ class Pokemon {
     }
     func downloadPokemonDetails(_ completed: @escaping DownloadComplete) {
         let url = URL(string: _pokemonUrl)!
-        Alamofire.request(.GET, url).responseJSON { response in
+        Alamofire.request(url, method: .get).responseJSON { response in
             let result = response.result
             print (result.value.debugDescription)
             print (response.result)
@@ -171,7 +171,7 @@ class Pokemon {
                 if let descArr = dict["descriptions"] as?[Dictionary<String, String>] , descArr.count > 0 {
                     if let url = descArr[0]["resource_uri"] {
                         let nsurl = URL(string: "\(URL_BASE)\(url)")!
-                        Alamofire.request(.GET, nsurl).responseJSON { response in
+                        Alamofire.request(nsurl, method: .get).responseJSON { response in
                             let desResult = response.result
                             if let descDict = desResult.value as? Dictionary<String, AnyObject> {
                                 if let description = descDict["description"] as? String {
