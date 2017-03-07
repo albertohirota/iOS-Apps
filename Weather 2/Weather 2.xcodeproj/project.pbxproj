@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		701A82961D9422D100C8E224 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701A82951D9422D100C8E224 /* Constants.swift */; };
 		70F546641D64855900CAF48C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F546631D64855900CAF48C /* AppDelegate.swift */; };
 		70F546661D64855900CAF48C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F546651D64855900CAF48C /* ViewController.swift */; };
 		70F546691D64855900CAF48C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70F546671D64855900CAF48C /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		701A82951D9422D100C8E224 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70F546601D64855900CAF48C /* Weather 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70F546631D64855900CAF48C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70F546651D64855900CAF48C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				70F546631D64855900CAF48C /* AppDelegate.swift */,
 				70F546651D64855900CAF48C /* ViewController.swift */,
 				70F546751D64858E00CAF48C /* Weather.swift */,
+				701A82951D9422D100C8E224 /* Constants.swift */,
 				70F546671D64855900CAF48C /* Main.storyboard */,
 				70F5466A1D64855900CAF48C /* Assets.xcassets */,
 				70F5466C1D64855900CAF48C /* LaunchScreen.storyboard */,
@@ -94,11 +97,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Alberto Hirota";
 				TargetAttributes = {
 					70F5465F1D64855900CAF48C = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = A3NV6A7XU8;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -141,6 +146,7 @@
 				70F546661D64855900CAF48C /* ViewController.swift in Sources */,
 				70F546761D64858E00CAF48C /* Weather.swift in Sources */,
 				70F546641D64855900CAF48C /* AppDelegate.swift in Sources */,
+				701A82961D9422D100C8E224 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,8 +186,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -226,8 +234,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -246,6 +256,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -255,10 +266,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A3NV6A7XU8;
 				INFOPLIST_FILE = "Weather 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tests.ts.Weather-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -266,10 +279,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A3NV6A7XU8;
 				INFOPLIST_FILE = "Weather 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tests.ts.Weather-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -292,6 +307,7 @@
 				70F546741D64855900CAF48C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -137,6 +137,7 @@
 				TargetAttributes = {
 					701402341D5E0C8300DE14C6 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = A3NV6A7XU8;
 					};
 				};
 			};
@@ -346,6 +347,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = A3NV6A7XU8;
 				INFOPLIST_FILE = MissingPersons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tests.ts.MissingPersons;
@@ -361,6 +363,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = A3NV6A7XU8;
 				INFOPLIST_FILE = MissingPersons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tests.ts.MissingPersons;

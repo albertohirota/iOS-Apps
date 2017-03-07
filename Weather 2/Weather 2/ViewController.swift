@@ -77,7 +77,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
             print("location services are not enabled")
         }
     }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
         let coordinations:CLLocationCoordinate2D = (manager.location?.coordinate)!
         let long = coordinations.longitude
@@ -90,10 +90,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
         updates()
         
     }
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
     }
-    @IBAction func updatePressed(sender: UIButton) {
+    @IBAction func updatePressed(_ sender: UIButton) {
         locateMe()
         timeNow()
         weekDay()
@@ -137,23 +137,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate  {
         
         repeat {
             updateScreen()
-            secs = NSCalendar.currentCalendar().component(.Second, fromDate: NSDate())
+            secs = (Calendar.current as NSCalendar).component(.second, from: Date())
         }
         while secs <= sec
     }
     func secNow() {
-        let secs = NSCalendar.currentCalendar().component(.Second, fromDate: NSDate())
+        let secs = (Calendar.current as NSCalendar).component(.second, from: Date())
         sec = secs + 4
     }
     func timeNow() {
-        let hours = NSCalendar.currentCalendar().component(.Hour, fromDate: NSDate())
-        let minutes = NSCalendar.currentCalendar().component(.Minute, fromDate: NSDate())
+        let hours = (Calendar.current as NSCalendar).component(.hour, from: Date())
+        let minutes = (Calendar.current as NSCalendar).component(.minute, from: Date())
         let min = NSString(format: "%02d", minutes)
         actualTime = "\(hours):\(min)"
         print(actualTime)
     }
     func weekDay() {
-        let weekD = NSCalendar.currentCalendar().component(.Weekday, fromDate: NSDate())
+        let weekD = (Calendar.current as NSCalendar).component(.weekday, from: Date())
         print(weekD)
         weekToday = weekName[weekD]
         week1 = weekName[weekD + 1]
